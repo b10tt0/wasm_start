@@ -140,15 +140,15 @@ Quick note:
 When designing an interface between WebAssembly and JavaScript, we want to optimize for the following
 properties:
 
-	1. **Minimizing copying into and out of the WebAssembly linear Memory.** Unnecessary copies
-     	   impose unnecessary overhead.
+1. **Minimizing copying into and out of the WebAssembly linear Memory.** Unnecessary copies
+impose unnecessary overhead.
 	
-	2. **Minimixe serializing and deserializing.** Similar to copies, serializing and deserializing
-	   also imposes overhead, and often imposes copying as well. If we can pass opaque handles to
-	   a data structure -- instead of serializing it on one side, copying it into some known location
-	   in the WebAssembly linear memory, and deserializing on the other side -- we can often reduce
-    	   a lot of overhead. `wasm_bindgen` helps us define and work with opaque handles to JavaScript
-	   `Object`s or boxed Rust structures.
+2. **Minimixe serializing and deserializing.** Similar to copies, serializing and deserializing
+also imposes overhead, and often imposes copying as well. If we can pass opaque handles to
+a data structure -- instead of serializing it on one side, copying it into some known location
+in the WebAssembly linear memory, and deserializing on the other side -- we can often reduce
+a lot of overhead. `wasm_bindgen` helps us define and work with opaque handles to JavaScript
+`Object`s or boxed Rust structures.
 
 As a general rule of thumb, a good Javascript<->WebAssembly interface design is often one where large,
 long-lived data structures are implemented as Rust types that live in the WebAssembly linear memory, and
