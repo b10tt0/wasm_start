@@ -19,7 +19,35 @@ const canvas = document.getElementById("game-of-life-canvas");
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
+// keeping track of requestAnimationFrame so that we can turn it off
+let animationId = null;
+
 const ctx = canvas.getContext('2d');
+
+const playPauseButton = document.getElementById("play-pause");
+
+const isPaused = () => {
+	return animationId === null;
+};
+
+const play = () => {
+	playPauseButton.textContent = "⏸";
+	renderLoop();
+};
+
+const pause = () => {
+	playPauseButton.textContent = "▶";
+	cancelAnimationFrame(animationId);
+	animationId = null;
+};
+
+playPauseButton.addEventListener("click", event => {
+	if (isPaused()) {
+		play();
+	} else {
+		pause();
+	}
+});
 
 const renderLoop = () => {
 	// debugger;
@@ -28,7 +56,7 @@ const renderLoop = () => {
 	drawGrid();
 	drawCells();
 
-	requestAnimationFrame(renderLoop);
+	animationId = requestAnimationFrame(renderLoop);
 };
 
 const drawGrid = () => {
@@ -82,4 +110,4 @@ const drawCells = () => {
 
 drawGrid();
 drawCells();
-requestAnimationFrame(renderLoop);
+play();
